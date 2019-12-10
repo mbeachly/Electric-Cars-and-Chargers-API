@@ -1,3 +1,12 @@
+/**************************************************************
+ * Author: Matt Beachly
+ * Date: 12/9/19
+ * Description: CS492 Final Project
+ * 
+ * This contains all routes following /chargers/ which
+ * perform CRUD operations on Charger entities.
+ **************************************************************/
+
 const bodyParser = require('body-parser'); // Reads POST requests
 const express = require('express');
 const model = require('./model-datastore'); // Contains CRUD functions

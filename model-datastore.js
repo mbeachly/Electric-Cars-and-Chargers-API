@@ -1,4 +1,5 @@
-// Most of these functions are from https://github.com/GoogleCloudPlatform/nodejs-getting-started/blob/steps/2-structured-data/books/model-datastore.js
+// Most of these functions are modified from 
+// https://github.com/GoogleCloudPlatform/nodejs-getting-started/blob/steps/2-structured-data/books/model-datastore.js
 
 const {Datastore} = require('@google-cloud/datastore');
 
