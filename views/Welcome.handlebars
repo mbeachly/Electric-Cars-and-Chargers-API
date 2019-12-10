@@ -1,0 +1,37 @@
+<title>Welcome</title>
+<div>
+	<h2>Electric Cars and Chargers API</h2>
+	<h3>CS493 Cloud Development Final Project</h3>
+	<h3>Matt Beachly</h3>
+	</br>
+</div>
+<div>
+	<img src="https://www.motortrend.com/uploads/sites/5/2019/11/Tesla-Cybertruck-Electric-Pickup-Truck-Profile-View-in-Hanger.jpg?fit=around%7C875:492" alt="Picture of tesla cybertruck">
+</div>
+<div>
+	<p>
+	The <b>Authorize!</b> button directs you to Google 
+	where you can authorize (using OAuth 2.0)
+	this app to access your Gmail email address
+	and profile information. Then you will be 
+	redirected back to this app and you can click 
+	the <b>See Your Info!</b> button to make this app 
+	request and display your Google information.
+	</p>
+	</br>
+	<form method="get" action={{auth_uri}}>
+		<input type="hidden" name="response_type" value={{response_type}}>
+		<input type="hidden" name="scope" value={{scope}}>
+		<input type="hidden" name="access_type" value={{access_type}}>
+		<input type="hidden" name="include_granted_scopes" value={{include_granted_scopes}}>
+		<input type="hidden" name="state" value={{state}}>
+		<input type="hidden" name="redirect_uri" value={{redirect_uri}}>
+		<input type="hidden" name="client_id" value={{client_id}}>
+		<button type="submit">Authorize!</button>
+	</form>
+	</br>
+	<form method="get" action={{user_info_uri}}>
+		<button type="submit">See Your Info!</button>
+	</form>
+</div>
+<link rel="stylesheet" href="styles.css" type="text/css">

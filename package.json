@@ -1,0 +1,23 @@
+{
+  "name": "assignment5",
+  "version": "1.0.0",
+  "description": "API with datastore",
+  "main": "model-datastore.js",
+  "dependencies": {
+    "@google-cloud/datastore": "^4.3.0",
+    "@google-cloud/debug-agent": "^4.0.4",
+    "Promise": "^1.0.5",
+    "axios": "^0.19.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-jwt": "^5.3.1",
+    "jwks-rsa": "^1.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Matt",
+  "license": "ISC"
+}

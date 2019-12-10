@@ -1,0 +1,3310 @@
+{
+	"info": {
+		"_postman_id": "fbba25d4-ade0-4ce9-91c2-39036f8344c5",
+		"name": "Final",
+		"description": "This collection tests the API specification given for Assignment 7.\nIn order to run this collection, you need an environment which has the following 3 environment variables pre-defined:\n\napp_url\n- Set this to your app. E.g., when running locally set it to http://localhost:8080. When running the app on GCP. set it to https://myapp.appsport.com\n\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all users 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00b996e8-52af-4a08-8ce2-22097177a90f",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one user exists\", function(){",
+							"   pm.expect(pm.response.json().items.length).to.be.at.least(1);",
+							"});",
+							"",
+							"pm.test(\"No more than five results per page\", function(){",
+							"   pm.expect(pm.response.json().items.length).to.be.at.most(5);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "54f0d904-1b1f-4b7a-95b7-eeb397449471",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/users",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users don't accept JSON 406",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5868c376-35e1-4fcd-b99e-32d340b777c2",
+						"exec": [
+							"pm.test(\"406 status code\", function () {",
+							"    pm.response.to.have.status(406);",
+							"});",
+							"",
+							"pm.test(\"406 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Client must accept application/json.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "html"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/users/{{user_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00b996e8-52af-4a08-8ce2-22097177a90f",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one user exists\", function(){",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "54f0d904-1b1f-4b7a-95b7-eeb397449471",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/users/{{user_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user don't accept JSON 406",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f1f0421-e865-4657-8a17-5998d56d7708",
+						"exec": [
+							"pm.test(\"406 status code\", function () {",
+							"    pm.response.to.have.status(406);",
+							"});",
+							"",
+							"pm.test(\"406 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Client must accept application/json.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "html"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/users/{{user_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user doesn't exist 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f1f0421-e865-4657-8a17-5998d56d7708",
+						"exec": [
+							"pm.test(\"406 status code\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"406 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No user with this user_id exists.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/users/asfeghs?",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users",
+						"asfeghs"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car 201",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.environment.set(\"car_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    pm.expect(pm.response.json()[\"make\"]).to.eq(\"Tesla\");",
+							"    pm.expect(pm.response.json()[\"model\"]).to.eq(\"Cybertruck\");",
+							"    pm.expect(pm.response.json()[\"year\"]).to.eq(2021);",
+							"    const self_url = pm.environment.get(\"app_url\") + \"cars/\" + pm.response.json()[\"id\"];",
+							"    pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Tesla\",\r\n  \"model\": \"Cybertruck\",\r\n  \"year\": 2021\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car no JWT token 401",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"401 status code\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": \"Leaf\",\r\n  \"length\": 2019\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car bad JWT token 401",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"401 status code\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "aahee",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": \"Leaf\",\r\n  \"length\": 2019\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car with missing attributes 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request object is missing at least one of the required attributes.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Tesla\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car invalid year 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Year must be > 1800.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Tesla\",\r\n  \"model\": \"Cybertruck\",\r\n  \"year\": 0\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car invalid year type 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Year must be in number format.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Tesla\",\r\n  \"model\": \"Cybertruck\",\r\n  \"year\": \"Not a number\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car with ID 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Can't send ID, set by server.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"not allowed\",\r\n  \"make\": \"Tesla\",\r\n  \"model\": \"Cybertruck\",\r\n  \"year\": 2021\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car with owner 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Can't send owner, set by JWT token.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Tesla\",\r\n  \"model\": \"Cybertruck\",\r\n  \"year\": 2021,\r\n  \"owner\": \"slgyhe\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car with charger 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Can't send charger, must be set via /chargers/:charger_id/car/:car_id.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Tesla\",\r\n  \"model\": \"Cybertruck\",\r\n  \"year\": 2021,\r\n  \"charger\": \"slgyhe\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car don't accept JSON 406",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"406 status code\", function () {",
+							"    pm.response.to.have.status(406);",
+							"});",
+							"",
+							"pm.test(\"406 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Client must accept application/json.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Tesla\",\r\n  \"model\": \"Cybertruck\",\r\n  \"year\": 2021,\r\n  \"charger\": \"slgyhe\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars?",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add car no JSON content 415",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"415 status code\", function () {",
+							"    pm.response.to.have.status(415);",
+							"});",
+							"",
+							"pm.test(\"415 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Server only accepts application/json data.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Tesla\",\r\n  \"model\": \"Cybertruck\",\r\n  \"year\": 2021,\r\n  \"charger\": \"slgyhe\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get car 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f1f0421-e865-4657-8a17-5998d56d7708",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    pm.expect(pm.response.json()[\"make\"]).to.eq(\"Tesla\");",
+							"    pm.expect(pm.response.json()[\"model\"]).to.eq(\"Cybertruck\");",
+							"    pm.expect(pm.response.json()[\"year\"]).to.eq(2021);",
+							"    const self_url = pm.environment.get(\"app_url\") + \"cars/\" + pm.response.json()[\"id\"];",
+							"    pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all cars 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00b996e8-52af-4a08-8ce2-22097177a90f",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one car exists\", function(){",
+							"   pm.expect(pm.response.json().items.length).to.be.at.least(1);",
+							"});",
+							"",
+							"pm.test(\"No more than five results per page\", function(){",
+							"   pm.expect(pm.response.json().items.length).to.be.at.most(5);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all cars by owner 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00b996e8-52af-4a08-8ce2-22097177a90f",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one car listed\", function(){",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "54f0d904-1b1f-4b7a-95b7-eeb397449471",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/users/{{user_id}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}",
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all cars by owner bad ID 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00b996e8-52af-4a08-8ce2-22097177a90f",
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No user with this user_id exists.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "54f0d904-1b1f-4b7a-95b7-eeb397449471",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/users/23526/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users",
+						"23526",
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get cars don't accept JSON 406",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f1f0421-e865-4657-8a17-5998d56d7708",
+						"exec": [
+							"pm.test(\"406 status code\", function () {",
+							"    pm.response.to.have.status(406);",
+							"});",
+							"",
+							"pm.test(\"406 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Client must accept application/json.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "html"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/cars/",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car 303",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"303 status code\", function () {",
+							"    pm.response.to.have.status(303);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    pm.expect(pm.response.location = pm.environment.get(\"app_url\") + \"/cars/\" + pm.environment.get(\"car_id\") );",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Anderson\",\r\n  \"model\": \"Detroit Electric\",\r\n  \"year\": 1911\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car invalid model 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Model must be >= 2 characters.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": \"Z\",\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car invalid model type 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Model must be in string format.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": 10,\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car invalid owner 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"User sub ID in JWT token does not match car owner.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": \"Leaf\",\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car ID 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The ID cannot be updated.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": \"Leaf\",\r\n  \"year\": 2019,\r\n  \"id\": \"slghes\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car charger 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Can't update charger, must be set via /chargers/:charger_id/car/:car_id.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": \"Leaf\",\r\n  \"year\": 2019,\r\n  \"charger\": \"slghes\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car owner 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The owner cannot be updated.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": \"Leaf\",\r\n  \"year\": 2019,\r\n  \"owner\": \"slghes\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car wrong JWT owner 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"User sub ID in JWT token does not match car owner.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": \"Leaf\",\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put all cars 405",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"405 status code\", function () {",
+							"    pm.response.to.have.status(405);",
+							"});",
+							"",
+							"pm.test(\"405 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Must specify car_id to be put.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"type\": \"Leaf\",\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch car 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    pm.expect(pm.response.json()[\"year\"]).to.eq(1915);",
+							"pm.globals.get(\"variable_key\");",
+							"    const self_url = pm.environment.get(\"app_url\") + \"cars/\" + pm.response.json()[\"id\"];",
+							"    pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"year\": 1915\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch car invalid make 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Make must be >= 2 characters.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"N\",\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch car invalid make type 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Make must be in string format.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": 200,\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch car wrong JWT owner 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"User sub ID in JWT token does not match car owner.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"make\": \"Nissan\",\r\n  \"model\": \"Leaf\",\r\n  \"year\": 2019\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add charger 201",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.environment.set(\"charger_id\", pm.response.json()[\"id\"]);",
+							"",
+							"pm.test(\"201 status code\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    pm.expect(pm.response.json()[\"address\"]).to.eq(\"123 Fake St.\");",
+							"    pm.expect(pm.response.json()[\"connector\"]).to.eq(\"Type 2\");",
+							"    pm.expect(pm.response.json()[\"output\"]).to.eq(43);",
+							"    const self_url = pm.environment.get(\"app_url\") + \"chargers/\" + pm.response.json()[\"id\"];",
+							"    pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"address\": \"123 Fake St.\",\r\n  \"connector\": \"Type 2\",\r\n  \"output\": 43\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add charger NO JWT token 401",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"401 status code\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"address\": \"123 Fake St.\",\r\n  \"connector\": \"Type 2\",\r\n  \"output\": 43\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add charger invalid address  400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Address must be >= 2 characters.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"address\": \"\",\r\n  \"connector\": \"Type 2\",\r\n  \"output\": 43\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add charger invalid address type 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Address must be in string format.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"address\": 1244,\r\n  \"connector\": \"Type 2\",\r\n  \"output\": 43\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add charger with missing attributes 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"400 status code\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"400 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request object is missing at least one of the required attributes.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"address\": \"5432 Green Acres Rd.\"\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add charger with car 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ecff411-7a3b-42dc-b33a-52116065953c",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"Can't send car, must be set via /chargers/:charger_id/car/:car_id.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"address\": \"123 Fake St.\",\r\n  \"connector\": \"Type 2\",\r\n  \"output\": 43,\r\n  \"car\": {{car_id}}\r\n}"
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get charger 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3f1f0421-e865-4657-8a17-5998d56d7708",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    pm.expect(pm.response.json()[\"address\"]).to.eq(\"123 Fake St.\");",
+							"    pm.expect(pm.response.json()[\"connector\"]).to.eq(\"Type 2\");",
+							"    pm.expect(pm.response.json()[\"output\"]).to.eq(43);",
+							"    const self_url = pm.environment.get(\"app_url\") + \"chargers/\" + pm.response.json()[\"id\"];",
+							"    pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all chargers 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00b996e8-52af-4a08-8ce2-22097177a90f",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"At least one charger exists\", function(){",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/chargers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get chargers by owner",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18fa337a-e8ca-4acd-af25-df4ed37bdf6d",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one charger listed\", function(){",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e533f180-5eef-4d60-af14-29acd1d6672d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/users/{{user_id}}/chargers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}",
+						"chargers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all chargers by owner bad ID 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "00b996e8-52af-4a08-8ce2-22097177a90f",
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No user with this user_id exists.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "54f0d904-1b1f-4b7a-95b7-eeb397449471",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/users/23526/chargers",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"users",
+						"23526",
+						"chargers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patch charger 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    pm.expect(pm.response.json()[\"connector\"]).to.eq(\"CCS\");",
+							"    pm.expect(pm.response.json()[\"output\"]).to.eq(80);",
+							"    pm.globals.get(\"variable_key\");",
+							"    const self_url = pm.environment.get(\"app_url\") + \"chargers/\" + pm.response.json()[\"id\"];",
+							"    pm.expect(pm.response.json()[\"self\"]).to.eq(self_url);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"connector\": \"CCS\",\r\n  \"output\": 80\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put charger 303",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"303 status code\", function () {",
+							"    pm.response.to.have.status(303);",
+							"});",
+							"",
+							"pm.test(\"content is valid\", function () {",
+							"    pm.expect(pm.response.location = pm.environment.get(\"app_url\") + \"/chargers/\" + pm.environment.get(\"charger_id\") );",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"address\": \"456 Lame Ln.\",\r\n  \"connector\": \"CHAdeMO\",\r\n  \"output\": 62.5\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car at charger 204",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"204 status code\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}/car/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}",
+						"car",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car (doesn't exist) at charger 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The specified car doesn’t exist.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}/car/2352356",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}",
+						"car",
+						"2352356"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car at charger (doesn't exist) 404 Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"404 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The specified charger doesn't exist.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers/266347/car/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"266347",
+						"car",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car (already assigned) at charger 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"This car is already parked at a charger.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}/car/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}",
+						"car",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put car (not owned by JWT) at charger 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7a74f9c-2581-40ca-9996-ba107147f762",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"User sub ID in JWT token does not match car owner.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"followRedirects": false
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}/car/{{car_id_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}",
+						"car",
+						"{{car_id_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get car at charger 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18fa337a-e8ca-4acd-af25-df4ed37bdf6d",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one car listed\", function(){",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e533f180-5eef-4d60-af14-29acd1d6672d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}/car/",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}",
+						"car",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get charger for car 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18fa337a-e8ca-4acd-af25-df4ed37bdf6d",
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"At least one car listed\", function(){",
+							"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(1);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e533f180-5eef-4d60-af14-29acd1d6672d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}/charger",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}",
+						"charger"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car at charger 204",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "18fa337a-e8ca-4acd-af25-df4ed37bdf6d",
+						"exec": [
+							"pm.test(\"204 status code\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e533f180-5eef-4d60-af14-29acd1d6672d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}/car/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}",
+						"car",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete charger 204",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2cac53f7-2029-4485-a74e-8660fec6b45b",
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e0d0f557-2fe0-4dd2-8697-b8b7646d7c8a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/chargers/{{charger_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"chargers",
+						"{{charger_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car 204",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2cac53f7-2029-4485-a74e-8660fec6b45b",
+						"exec": [
+							"pm.test(\"204 no content\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e0d0f557-2fe0-4dd2-8697-b8b7646d7c8a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car bad JWT 401",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2cac53f7-2029-4485-a74e-8660fec6b45b",
+						"exec": [
+							"pm.test(\"401 status code\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e0d0f557-2fe0-4dd2-8697-b8b7646d7c8a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "asgegtsge",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete car wrong JWT owner 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2cac53f7-2029-4485-a74e-8660fec6b45b",
+						"exec": [
+							"pm.test(\"403 status code\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"403 error message\", function () {",
+							"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"User sub ID in JWT token does not match car owner.\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e0d0f557-2fe0-4dd2-8697-b8b7646d7c8a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{app_url}}/cars/{{car_id_1}}",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"cars",
+						"{{car_id_1}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "42aac422-9426-4c94-b0f1-5e1b9218971e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5e41c7b2-d777-46d4-b524-7cad7edb5875",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
